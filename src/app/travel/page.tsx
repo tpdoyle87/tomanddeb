@@ -13,63 +13,8 @@ export const metadata: Metadata = {
   description: 'Explore our travel stories, destinations, and adventures from around the world.',
 };
 
-// Travel destination data (can be moved to database later)
-const destinations = [
-  {
-    id: 'thailand',
-    name: 'Thailand',
-    description: 'Land of smiles, temples, and tropical beaches',
-    image: 'https://images.unsplash.com/photo-1528181304800-259b08848526?w=800',
-    posts: 12,
-    lastVisit: '2024',
-    highlights: ['Bangkok', 'Chiang Mai', 'Ko Phi Phi', 'Phuket'],
-  },
-  {
-    id: 'vietnam',
-    name: 'Vietnam',
-    description: 'Rich history, stunning landscapes, and delicious cuisine',
-    image: 'https://images.unsplash.com/photo-1555921015-5532091f6026?w=800',
-    posts: 8,
-    lastVisit: '2024',
-    highlights: ['Ha Long Bay', 'Hanoi', 'Ho Chi Minh City', 'Hoi An'],
-  },
-  {
-    id: 'japan',
-    name: 'Japan',
-    description: 'Where ancient traditions meet modern innovation',
-    image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800',
-    posts: 15,
-    lastVisit: '2023',
-    highlights: ['Tokyo', 'Kyoto', 'Osaka', 'Mount Fuji'],
-  },
-  {
-    id: 'italy',
-    name: 'Italy',
-    description: 'Art, history, and the best food in the world',
-    image: 'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=800',
-    posts: 10,
-    lastVisit: '2023',
-    highlights: ['Rome', 'Venice', 'Florence', 'Amalfi Coast'],
-  },
-  {
-    id: 'greece',
-    name: 'Greece',
-    description: 'Ancient ruins, crystal waters, and island paradise',
-    image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800',
-    posts: 6,
-    lastVisit: '2023',
-    highlights: ['Athens', 'Santorini', 'Mykonos', 'Crete'],
-  },
-  {
-    id: 'peru',
-    name: 'Peru',
-    description: 'Inca heritage, Amazon rainforest, and mountain adventures',
-    image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?w=800',
-    posts: 7,
-    lastVisit: '2022',
-    highlights: ['Machu Picchu', 'Cusco', 'Lima', 'Amazon'],
-  },
-];
+// Travel destinations will be added as we visit them
+const destinations: any[] = [];
 
 async function getRecentTravelPosts() {
   try {
@@ -196,11 +141,16 @@ export default async function TravelPage() {
         <section className="mb-16">
           <div className="mb-8">
             <h2 className="text-3xl font-playfair font-bold mb-4">Featured Destinations</h2>
-            <p className="text-gray-600">Click on a destination to explore our adventures there</p>
+            <p className="text-gray-600">
+              {destinations.length > 0
+                ? "Click on a destination to explore our adventures there"
+                : "Our travel destinations will appear here as we explore the world"}
+            </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {destinations.map((destination) => (
+
+          {destinations.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {destinations.map((destination) => (
               <Link
                 key={destination.id}
                 href={`/travel/${destination.id}`}
@@ -248,6 +198,15 @@ export default async function TravelPage() {
               </Link>
             ))}
           </div>
+          ) : (
+            <Card className="p-12 text-center bg-gray-50">
+              <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-gray-700 mb-2">No Destinations Yet</h3>
+              <p className="text-gray-600 max-w-md mx-auto">
+                We're just getting started on our travel journey. Check back soon for exciting destinations and travel stories!
+              </p>
+            </Card>
+          )}
         </section>
 
         {/* Recent Travel Posts */}
